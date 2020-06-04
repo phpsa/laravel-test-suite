@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+    //https://laravel.com/docs/5.7/routing#rate-limiting
+    'middleware' => [],
+    'as'         => 'api.',
+    'namespace'  => 'Api',
+], function () {
+    Route::apiresource('user', 'UserController')->only(['index','store','destroy','show','update']);
 });
