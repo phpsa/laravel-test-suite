@@ -8,19 +8,36 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.2.5",
+        "php": "^7.3.11",
+        "custom-d/api-authentication": "^0.5.0",
+        "custom-d/eloquent-async-keys": "^2.1",
+        "custom-d/eloquent-model-encrypt": "^1.3",
+        "custom-d/laravel-legacy-soft-deletes": "^1.1",
+        "custom-d/laravel-zon": "dev-master",
+        "custom-d/simple-content": "^1.2",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^7.0",
-        "laravel/tinker": "^2.0"
+        "laravel/tinker": "^2.0",
+        "phpsa/laravel-api-controller": "^1.5"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^2.7",
+        "beyondcode/laravel-self-diagnosis": "^1.4",
+        "brainmaestro/composer-git-hooks": "^2.8",
+        "doctrine/dbal": "^2.10",
         "facade/ignition": "^2.0",
         "fzaninotto/faker": "^1.9.1",
+        "melihovv/laravel-package-generator": "^7.0",
         "mockery/mockery": "^1.3.1",
         "nunomaduro/collision": "^4.1",
-        "phpunit/phpunit": "^8.5"
+        "nunomaduro/phpinsights": "^1.14",
+        "phpsa/laravel-postman": "^2.0",
+        "phpsa/laravel-yourls-plugin": "^1.1",
+        "phpunit/phpunit": "9.0",
+        "roave/security-advisories": "dev-master",
+        "squizlabs/php_codesniffer": "^3.5"
     },
     "config": {
         "optimize-autoloader": true,
@@ -51,13 +68,44 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "[ $COMPOSER_DEV_MODE -eq 0 ] || composer ide-helper",
+            "[ $COMPOSER_DEV_MODE -eq 0 ] || cghooks add --force"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "ide-helper": [
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:meta"
+        ],
+        "self-diagnosis": [
+            "@composer validate",
+            "@php artisan self-diagnosis"
+        ],
+        "test": [
+            "@php artisan test"
+        ],
+        "standards": [
+            "@composer self-diagnosis",
+            "@composer phpcs:check",
+            "@composer test",
+            "@php artisan insights --no-interaction --min-quality=80 --min-complexity=80 --min-architecture=80 --min-style=80"
+        ],
+        "phpcs:check": [
+            "phpcs --standard=./laravel.phpcs.xml --runtime-set testVersion 7.2- --extensions=php"
+        ],
+        "phpcs:format": [
+            "phpcbf --standard=./laravel.phpcs.xml --runtime-set testVersion 7.2- --extensions=php"
         ]
-    }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "packages/custom-d/laravel-zon"
+        }
+    ]
 }
