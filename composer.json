@@ -22,7 +22,7 @@
         "laravel/passport": "^9.2",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
-        "phpsa/laravel-api-controller": "^1.5"
+        "phpsa/laravel-api-controller": "^1.6.0-b.1"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.7",

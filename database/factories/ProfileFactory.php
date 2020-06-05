@@ -11,7 +11,7 @@ $factory->define(Profile::class, function (Faker $faker) {
     $totalUsers = User::count();
 
     return [
-        'gender' => $faker->randomElement([0,1,2]),
+        'gender' => $faker->randomElement(['male','female','other']),
         'dob'    => $faker->dateTimeBetween('-30 years', '-10 years')
     ];
 });

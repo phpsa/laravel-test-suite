@@ -21,4 +21,6 @@ Route::group([
     'namespace'  => 'Api',
 ], function () {
     Route::apiresource('user', 'UserController')->only(['index','store','destroy','show','update']);
+    Route::apiresource('profiles', 'ProfileController')->only(['index','store','destroy','show','update']);
+    Route::apiresource('profiles', 'ProfileController')->only(['index','store','destroy','show','update']);
 });
